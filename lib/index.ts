@@ -1,3 +1,5 @@
+import {afterEach, beforeEach, vi} from "vitest";
+
 const DEFAULT_LOG_SETTINGS: LogSettings = {
     singleLine: false,
     format: "[LEVEL]: TIMESTAMP - MESSAGE",
@@ -12,10 +14,10 @@ export class ToyLogger {
 
     private constructor(config?: LogConfig) {
         this.target.set(LogLevel.DEBUG, toLogDetail(config ? config[LogLevel.DEBUG] : undefined));
-        this.target.set(LogLevel.INFO, toLogDetail(config ? config[LogLevel.DEBUG] : undefined));
-        this.target.set(LogLevel.LOG,toLogDetail(config ? config[LogLevel.DEBUG] : undefined));
-        this.target.set(LogLevel.WARN,toLogDetail(config ? config[LogLevel.DEBUG] : undefined));
-        this.target.set(LogLevel.ERROR,toLogDetail(config ? config[LogLevel.DEBUG] : undefined));
+        this.target.set(LogLevel.INFO, toLogDetail(config ? config[LogLevel.INFO] : undefined));
+        this.target.set(LogLevel.LOG,toLogDetail(config ? config[LogLevel.LOG] : undefined));
+        this.target.set(LogLevel.WARN,toLogDetail(config ? config[LogLevel.WARN] : undefined));
+        this.target.set(LogLevel.ERROR,toLogDetail(config ? config[LogLevel.ERROR] : undefined));
         this.defaultSetting = {
             ...DEFAULT_LOG_SETTINGS,
             ...config?.defaultSettings
@@ -108,7 +110,6 @@ async function output(logDetail: LogSettings, callbackFunctions: LogCallback[], 
         }
     }
     await Promise.all(asyncCallBacks);
-
 }
 
 /**
@@ -124,7 +125,7 @@ const toLogDetail = (input?: LogDetailInput) => {
     }
 }
 
-enum LogLevel {
+export enum LogLevel {
     DEBUG = "DEBUG",
     INFO = "INFO",
     LOG = "LOG",
@@ -175,4 +176,37 @@ if (import.meta.vitest) {
             expect(intoLogFormat(DEFAULT_LOG_SETTINGS.format, LogLevel.DEBUG, TIMESTAMP, MESSAGE)).toBe(`[DEBUG]: ${TIMESTAMP} - ${MESSAGE}`);
         });
     });
+
+    describe("toLogDetail", () => {
+
+        let mockSetting: LogSettings;
+
+        beforeEach(() => {
+            mockSetting = {
+                singleLine: false,
+                format: "",
+                useConsole: false,
+                useStackTrace: false,
+            }
+            vi.useFakeTimers()
+        })
+        afterEach(() => {
+            vi.restoreAllMocks();
+            vi.useRealTimers()
+        })
+        describe("console log", () => {
+            it("enable", async () => {
+                mockSetting.useConsole = true;
+                const fn = vi.fn();
+                await output(mockSetting, [() => {}], "test", LogLevel.DEBUG, fn);
+                expect(fn).toBeCalled();
+            })
+            it("disable", async () => {
+                const fn = vi.fn();
+                await output(mockSetting, [() => {}], "test", LogLevel.DEBUG, fn);
+                expect(fn).not.toBeCalled();
+            })
+        })
+
+    })
 }
