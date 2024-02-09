@@ -83,7 +83,6 @@ async function output(logDetail: LogSettings, callbackFunctions: LogCallback[], 
     const stackTrace = new Error().stack;
 
     if (logDetail.useStackTrace) {
-        const stackTrace = new Error().stack;
         messages.push(stackTrace || "the stack trace is not available");
     }
 
