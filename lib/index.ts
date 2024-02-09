@@ -5,7 +5,7 @@ const DEFAULT_LOG_SETTINGS: LogSettings = {
     useStackTrace: false
 }
 
-class ToyLogger {
+export class ToyLogger {
 
     private target: LogTarget = new Map();
     private readonly defaultSetting: LogSettings;
@@ -20,6 +20,16 @@ class ToyLogger {
             ...DEFAULT_LOG_SETTINGS,
             ...config?.defaultSettings
         };
+    }
+
+    // add new call back function(s).
+    public addCallBack(level: LogLevel, callback: LogCallbackInput) {
+        const logDetail = this.target.get(level)!;
+        const callbackList = Array.isArray(callback) ? callback : [callback];
+        this.target.set(level, {
+            ...logDetail,
+            callback: [...logDetail.callback, ...callbackList]
+        })
     }
 
     public async log(logMessage: LogMessage) {
@@ -77,7 +87,7 @@ async function output(logDetail: LogSettings, callbackFunctions: LogCallback[], 
 
     // into a list.
     const messages: string[] = logDetail.singleLine
-        ? Array.isArray(logMessage) ? [logMessage.join(" ")] : [logMessage]
+        ? Array.isArray(logMessage) ? [logMessage.join("/n")] : [logMessage]
         : Array.isArray(logMessage) ? logMessage : [logMessage];
 
     const stackTrace = new Error().stack;
