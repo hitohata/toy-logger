@@ -1,16 +1,30 @@
 {
   "name": "toy-logger",
+  "version": "0.0.0",
+  "description": "This package is created for my fun, don't use this in the production.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": ["dist"],
   "type": "module",
   "scripts": {
-    "build": "tsup ./lib/index.ts"
+    "build": "tsup ./lib/index.ts",
+    "test": "vitest"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hitohata/toy-logger.git"
+  },
+  "auther": "hitohata",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hitohata/toy-logger/issues"
+  },
+  "homepage": "https://github.com/hitohata/toy-logger",
   "devDependencies": {
     "@types/bun": "latest",
-    "tsup": "^8.0.1"
+    "tsup": "^8.0.1",
+    "vitest": "^1.2.2"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

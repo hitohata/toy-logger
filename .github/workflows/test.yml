@@ -15,7 +15,7 @@ jobs:
       - name: Install Dependencies
         run: bun install
       - name: Run Tests
-        run: bun test
+        run: bun run vitest
 
   test-package-build:
     runs-on: ubuntu-latest
