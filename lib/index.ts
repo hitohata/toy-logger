@@ -5,6 +5,10 @@ const DEFAULT_LOG_SETTINGS: LogSettings = {
     useStackTrace: false
 }
 
+/**
+ * The document is here:
+ * https://github.com/hitohata/toy-logger
+ */
 export class ToyLogger {
 
     private target: LogTarget = new Map();
