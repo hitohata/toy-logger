@@ -8,7 +8,7 @@
   "files": ["dist"],
   "type": "module",
   "scripts": {
-    "build": "tsup ./lib/index.ts",
+    "build": "tsup",
     "test": "vitest"
   },
   "repository": {
