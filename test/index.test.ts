@@ -84,7 +84,7 @@ describe("toy logger", () => {
     })
 
     describe("the each settings has a priority", () => {
-        it.only("priority", async () => {
+        it("priority", async () => {
             const a = vi.spyOn(console, "log").mockImplementation(() => {});
             const b = vi.spyOn(console, "warn").mockImplementation(() => {});
             const toyLogger = ToyLogger.create({
