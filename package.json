@@ -1,6 +1,6 @@
 {
   "name": "toy-logger",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "This package is created for my fun, don't use this in the production.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
