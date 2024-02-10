@@ -2,23 +2,22 @@
   "compilerOptions": {
     "lib": ["ES2022"],
     "target": "ES2022",
-    "module": "commonjs",
-    "moduleDetection": "force",
+    "module": "ES2022",
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./lib",
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
     "noEmit": true,
 
     /* Linting */
     "skipLibCheck": true,
     "strict": true,
     "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["vitest/importMeta"]
   },
   "include": ["lib/**/*.ts"],
   "exclude": ["test/**/*.test.ts"]

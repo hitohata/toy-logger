@@ -1,14 +1,13 @@
 {
   "name": "toy-logger",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "This package is created for my fun, don't use this in the production.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": ["dist"],
-  "type": "module",
   "scripts": {
-    "build": "tsup ./lib/index.ts",
+    "build": "tsup",
     "test": "vitest"
   },
   "repository": {
