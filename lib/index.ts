@@ -1,4 +1,4 @@
-import {afterEach, beforeEach, vi} from "vitest";
+import { afterEach, beforeEach, vi } from "vitest";
 
 const DEFAULT_LOG_SETTINGS: LogSettings = {
     singleLine: false,
@@ -207,6 +207,5 @@ if (import.meta.vitest) {
                 expect(fn).not.toBeCalled();
             })
         })
-
     })
 }

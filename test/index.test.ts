@@ -1,5 +1,5 @@
-import {afterEach, beforeEach, describe, expect, it, type Mock, vi} from "vitest";
-import {LogLevel, ToyLogger} from "../lib/index";
+import { afterEach, beforeEach, describe, expect, it, type Mock, vi } from "vitest";
+import { LogLevel, ToyLogger } from "../lib";
 
 describe("toy logger", () => {
 
