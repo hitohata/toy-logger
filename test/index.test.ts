@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, type Mock, vi } from "vitest";
-import { LogLevel, ToyLogger } from "../lib";
+import {LogLevel, ToyLogger, __local__, __DEFAULT_LOG_SETTINGS__, __LogSettings  } from "../lib";
+const { output, intoLogFormat } = __local__;
 
 describe("toy logger", () => {
 
@@ -101,6 +102,46 @@ describe("toy logger", () => {
 
             await toyLogger.warn("");
             expect(b).toHaveBeenCalledTimes(1);
+        })
+    })
+
+    describe("intoLogFormat", () => {
+        it("format", () => {
+            const TIMESTAMP = "1984/04/04T00:00:00"
+            const MESSAGE = "crucial"
+            expect(intoLogFormat(__DEFAULT_LOG_SETTINGS__.format, LogLevel.DEBUG, TIMESTAMP, MESSAGE)).toBe(`[DEBUG]: ${TIMESTAMP} - ${MESSAGE}`);
+        });
+    });
+
+    describe("toLogDetail", () => {
+
+        let mockSetting: __LogSettings;
+
+        beforeEach(() => {
+            mockSetting = {
+                singleLine: false,
+                format: "",
+                useConsole: false,
+                useStackTrace: false,
+            }
+            vi.useFakeTimers()
+        })
+        afterEach(() => {
+            vi.restoreAllMocks();
+            vi.useRealTimers()
+        })
+        describe("console log", () => {
+            it("enable", async () => {
+                mockSetting.useConsole = true;
+                const fn = vi.fn();
+                await output(mockSetting, [() => {}], "test", LogLevel.DEBUG, fn);
+                expect(fn).toBeCalled();
+            })
+            it("disable", async () => {
+                const fn = vi.fn();
+                await output(mockSetting, [() => {}], "test", LogLevel.DEBUG, fn);
+                expect(fn).not.toBeCalled();
+            })
         })
     })
 })

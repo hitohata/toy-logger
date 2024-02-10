@@ -1,5 +1,3 @@
-import { afterEach, beforeEach, vi } from "vitest";
-
 const DEFAULT_LOG_SETTINGS: LogSettings = {
     singleLine: false,
     format: "[LEVEL]: TIMESTAMP - MESSAGE",
@@ -167,45 +165,7 @@ type LogConfig = {
     defaultSettings?: Partial<LogSettings>
 };
 
-if (import.meta.vitest) {
-    const { describe, it, expect } = import.meta.vitest;
-    describe("intoLogFormat", () => {
-        it("format", () => {
-            const TIMESTAMP = "1984/04/04T00:00:00"
-            const MESSAGE = "crucial"
-            expect(intoLogFormat(DEFAULT_LOG_SETTINGS.format, LogLevel.DEBUG, TIMESTAMP, MESSAGE)).toBe(`[DEBUG]: ${TIMESTAMP} - ${MESSAGE}`);
-        });
-    });
+export const __DEFAULT_LOG_SETTINGS__ = DEFAULT_LOG_SETTINGS;
+export const __local__ = { output, intoLogFormat }
 
-    describe("toLogDetail", () => {
-
-        let mockSetting: LogSettings;
-
-        beforeEach(() => {
-            mockSetting = {
-                singleLine: false,
-                format: "",
-                useConsole: false,
-                useStackTrace: false,
-            }
-            vi.useFakeTimers()
-        })
-        afterEach(() => {
-            vi.restoreAllMocks();
-            vi.useRealTimers()
-        })
-        describe("console log", () => {
-            it("enable", async () => {
-                mockSetting.useConsole = true;
-                const fn = vi.fn();
-                await output(mockSetting, [() => {}], "test", LogLevel.DEBUG, fn);
-                expect(fn).toBeCalled();
-            })
-            it("disable", async () => {
-                const fn = vi.fn();
-                await output(mockSetting, [() => {}], "test", LogLevel.DEBUG, fn);
-                expect(fn).not.toBeCalled();
-            })
-        })
-    })
-}
+export type __LogSettings = LogSettings;
